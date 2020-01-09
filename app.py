@@ -67,6 +67,10 @@ def getChildren(parentId):
 
         unresolved.clear()
 
+    #TODO: put in stopper if tree traversed already, i.e. sum of all list = len(oglist)
+    #TODO: put in check if parentID doesn't exist, i e self is empty
+    #TODO: check: can I delete elements of the list while I'm looping through the same? because then I get O(n)
+
     def resolveNode(folder):
         if folder['parent'] == 1:
             #print(str(folder['id']) + " has parent root, which is not our parentId")
