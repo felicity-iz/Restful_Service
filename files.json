@@ -1,0 +1,86 @@
+[
+    {
+        "id": 12,
+        "name": "folder12",
+        "parent": 6,
+        "sum": 15
+    },
+    {
+        "id": 2,
+        "name": "folder2",
+        "parent": 1,
+        "sum": 8
+    },
+    {
+        "id": 3,
+        "name": "folder3",
+        "parent": 2,
+        "sum": 4
+    },
+      {
+        "id": 14,
+        "name": "folder14",
+        "parent": 7,
+        "sum": 15
+    },
+    {
+        "id": 15,
+        "name": "folder15",
+        "parent": 13,
+        "sum": 15
+    },
+    {
+        "id": 5,
+        "name": "folder41",
+        "parent": 3,
+        "sum": 56
+    },
+    {
+        "id": 4,
+        "name": "folder1",
+        "parent": 1,
+        "sum": 15
+    },
+    {
+        "id": 8,
+        "name": "folder8",
+        "parent": 4,
+        "sum": 15
+    },
+    {
+        "id": 9,
+        "name": "folder9",
+        "parent": 4,
+        "sum": 15
+    },
+    {
+        "id": 10,
+        "name": "folder10",
+        "parent": 9,
+        "sum": 15
+    },
+    {
+        "id": 11,
+        "name": "folder11",
+        "parent": 6,
+        "sum": 15
+    },
+    {
+        "id": 7,
+        "name": "folder01",
+        "parent": 3,
+        "sum": 13
+    },
+    {
+        "id": 13,
+        "name": "folder13",
+        "parent": 7,
+        "sum": 15
+    },
+    {
+        "id": 6,
+        "name": "folder31",
+        "parent": 5,
+        "sum": 10
+    }
+]

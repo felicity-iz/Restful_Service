@@ -56,79 +56,104 @@ def getChildren(parentId):
     ancestors = []
     unresolved = []
 
-    def addChildrenObjects(unresolvedObjects):
-        for previous in unresolvedObjects:
-            childrenObjects.append(previous)
-        unresolvedObjects.clear()
+    def addChildrenObjects():
+        print(str(len(unresolvedObjects)))
+        for object in unresolvedObjects:
+            childrenObjects.append(object)
 
     def assign(unresolved,relation):
         for previous in unresolved:
             relation.append(previous)
-
         unresolved.clear()
 
-    #TODO: put in stopper if tree traversed already, i.e. sum of all list = len(oglist)
     #TODO: put in check if parentID doesn't exist, i e self is empty
-    #TODO: check: can I delete elements of the list while I'm looping through the same? because then I get O(n)
 
     def resolveNode(folder):
+        #print(str(folder['id']))
         if folder['parent'] == 1:
             #print(str(folder['id']) + " has parent root, which is not our parentId")
             notChildren.append(folder['id'])
+            if len(unresolved) != 0:
+                assign(unresolved, notChildren)
+                unresolvedObjects.clear()
+                #print("added unresolved to NOT children")
             return
         if folder['id'] == parentId:
             #print(str(folder['id'])+ "is self")
-            notChildren.append(folder['id'])
-            ancestors.append(folder['parent'])
+            if(folder['id'] not in notChildren):
+                notChildren.append(folder['id'])
+            if (folder['id'] not in ancestors):
+                ancestors.append(folder['parent'])
             if len(unresolved) != 0:
                 assign(unresolved, children)
+                addChildrenObjects()
+                unresolvedObjects.clear()
+                #print("added unresolved to children")
             return
         if folder['parent'] == parentId:
             #print(str(folder['id']) + "is direct child")
-            children.append(folder['id'])
-            childrenObjects.append(folder)
+            if (folder['id'] not in children):
+                children.append(folder['id'])
+                childrenObjects.append(folder)
             if len(unresolved) != 0:
                 assign(unresolved, children)
-                addChildrenObjects(unresolvedObjects)
+                addChildrenObjects()
+                unresolvedObjects.clear()
+                #print("added unresolved to children")
             return
         if folder['id'] in ancestors:
             #print(str(folder['id']) + "is ancestor")
             if len(unresolved) != 0:
                 assign(unresolved, ancestors)
                 unresolvedObjects.clear()
+                #print("added unresolved to ancestors")
             if folder['parent'] not in ancestors:
-                ancestors.append(folder['parent'])
+                if (folder['id'] not in ancestors):
+                    ancestors.append(folder['parent'])
                 return
             return
         if folder['parent'] in ancestors:
             #print(str(folder['id']) + "is either ancestor or diff branch")
-            notChildren.append(folder['id'])
+            if (folder['id'] not in notChildren):
+                notChildren.append(folder['id'])
             if len(unresolved) != 0:
                 assign(unresolved, notChildren)
                 unresolvedObjects.clear()
+                #print("added unresolved to NOT children")
             return
         if folder['parent'] in children:
             #print(str(folder['id']) + "is indirect child")
-            children.append(folder['id'])
-            childrenObjects.append(folder)
+            if (folder['id'] not in children):
+                children.append(folder['id'])
+                childrenObjects.append(folder)
             if len(unresolved) != 0:
-                #if the parent is and indirect child then so are unresolved
-                assign(unresolved, notChildren)
-                addChildrenObjects(unresolvedObjects)
+                #if the parent is an indirect child then so are unresolved
+                assign(unresolved, children)
+                addChildrenObjects()
+                unresolvedObjects.clear()
+                #print("added unresolved to children")
             return
         if folder['parent'] in notChildren:
-            #print(str(folder['id']) + "has parent from different branch")
-            notChildren.append(folder['id'])
+            #print(str(folder['id']) + "has parent from different branch or ancestor")
+            if (folder['id'] not in notChildren):
+                notChildren.append(folder['id'])
+            if len(unresolved) != 0:
+                assign(unresolved, notChildren)
+                unresolvedObjects.clear()
+                #print("added unresolved to NOT children")
             return
-        #print(str(folder['id']) + "is unresolved")
+        if (len(children),len(notChildren),len(ancestors)) == len(list):
+            #print("all elements are sorted")
+            return
+        #print(str(folder['id']) + " is unresolved")
         unresolved.append(folder['id'])
         unresolvedObjects.append(folder)
         currentParent = folder['parent']
 
         for folder in list:
             if folder['id'] == currentParent:
-                #travels up the tree until it resolves
-                resolveNode(folder['parent']);
+                print("travel up tree to find " + str(currentParent))
+                resolveNode(folder);
 
     if parentId == 1:
         return data;
