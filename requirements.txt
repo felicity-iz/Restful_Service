@@ -14,4 +14,4 @@ mimerender==0.6.0
 pip==19.2.3
 python-dateutil==2.8.1
 python-mimeparse==1.6.0
-setuptools==41.2.0
+setuptools==65.5.1
